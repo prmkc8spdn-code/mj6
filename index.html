@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>名将传</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div id="gold-display" class="gold-display">0 金</div>
+
+    <!-- 主界面 -->
+    <section id="phase-home" class="phase">
+      <header class="game-header">
+        <h1>名将传</h1>
+        <p class="subtitle" id="home-subtitle">玩家 vs 草莽</p>
+      </header>
+      <div class="home-buttons">
+        <button id="btn-tutorial" class="btn btn-home">新手教程</button>
+        <button id="btn-start" class="btn btn-home btn-primary">开始游戏</button>
+        <button id="btn-hard" class="btn btn-home">困难模式</button>
+        <button id="btn-achievements" class="btn btn-home">成就</button>
+      </div>
+    </section>
+
+    <!-- 用户名输入（首次进入时） -->
+    <section id="phase-username" class="phase hidden">
+      <p class="phase-hint">请输入你的用户名</p>
+      <input type="text" id="username-input" placeholder="请输入用户名" maxlength="20" />
+      <button id="btn-confirm-username" class="btn">确认</button>
+    </section>
+
+    <!-- 新手教程 -->
+    <section id="phase-tutorial" class="phase hidden">
+      <h3 class="tutorial-title">新手教程</h3>
+      <div id="tutorial-content" class="tutorial-content"></div>
+      <button id="btn-tutorial-next" class="btn">下一页</button>
+      <button id="btn-tutorial-complete" class="btn hidden">完成教程</button>
+    </section>
+
+    <!-- 成就 -->
+    <section id="phase-achievements" class="phase hidden">
+      <h3 class="phase-hint">成就</h3>
+      <div id="achievements-list" class="achievements-list"></div>
+      <button id="btn-back-achievements" class="btn">返回</button>
+    </section>
+
+    <!-- 阶段：抛硬币 -->
+    <section id="phase-coin" class="phase hidden">
+      <p class="phase-hint">即将决定攻防……</p>
+      <div id="coin-container">
+        <div id="coin" class="coin">
+          <div class="coin-face coin-front">攻</div>
+          <div class="coin-face coin-back">防</div>
+        </div>
+      </div>
+      <p id="coin-result" class="coin-result hidden"></p>
+      <button id="btn-after-coin" class="btn hidden">进入选将</button>
+    </section>
+
+    <!-- 阶段：选将 -->
+    <section id="phase-pick" class="phase hidden">
+      <p id="pick-prompt" class="phase-hint">请选择武将</p>
+      <p id="pick-turn" class="pick-turn"></p>
+      <div id="deck" class="deck"></div>
+      <div id="hands" class="hands">
+        <div class="hand hand-player">
+          <span class="hand-label"><span id="player-name-label">你</span>的手牌</span>
+          <div id="hand-player" class="hand-cards"></div>
+        </div>
+        <div class="hand hand-npc">
+          <span class="hand-label">草莽手牌</span>
+          <div id="hand-npc" class="hand-cards"></div>
+        </div>
+      </div>
+      <button id="btn-after-pick" class="btn hidden">进入战斗</button>
+    </section>
+
+    <!-- 阶段：战斗 -->
+    <section id="phase-battle" class="phase hidden">
+      <div class="battle-score">
+        <span><span id="battle-player-name">你</span> <strong id="score-player">0</strong></span>
+        <span>草莽 <strong id="score-npc">0</strong></span>
+      </div>
+      <p id="battle-round-hint" class="phase-hint"></p>
+      <p id="battle-choose-attr" class="phase-hint hidden">请选择本回合比较的属性</p>
+      <div id="attr-buttons" class="attr-buttons hidden">
+        <button class="btn attr-btn" data-attr="strategy">策略</button>
+        <button class="btn attr-btn" data-attr="command">统帅</button>
+        <button class="btn attr-btn" data-attr="martial">武力</button>
+        <button class="btn attr-btn" data-attr="influence">威望</button>
+      </div>
+      <div id="battle-cards" class="battle-cards hidden">
+        <div class="battle-card-slot">
+          <span class="slot-label" id="battle-slot-player">你</span>
+          <div id="battle-card-player" class="battle-card-reveal"></div>
+          <p id="battle-dice-player" class="dice-result"></p>
+          <p id="battle-zhanhao" class="zhanhao-hint hidden"></p>
+        </div>
+        <div class="battle-vs">VS</div>
+        <div class="battle-card-slot">
+          <span class="slot-label">草莽</span>
+          <div id="battle-card-npc" class="battle-card-reveal"></div>
+          <p id="battle-dice-npc" class="dice-result"></p>
+          <p id="battle-zhanhao-npc" class="zhanhao-hint hidden"></p>
+        </div>
+      </div>
+      <p id="battle-round-result" class="round-result hidden"></p>
+      <button id="btn-roll-dice" class="btn hidden">掷骰</button>
+      <div id="battle-hand-player" class="battle-hand">
+        <span>选择本回合出战的武将</span>
+        <div id="battle-hand-cards" class="hand-cards"></div>
+      </div>
+      <button id="btn-next-round" class="btn hidden">下一回合</button>
+    </section>
+
+    <!-- 阶段：结束 -->
+    <section id="phase-end" class="phase hidden">
+      <div id="end-result" class="end-result"></div>
+      <p id="end-message" class="end-message"></p>
+      <p id="end-achievement" class="end-achievement hidden"></p>
+      <button id="btn-play-again" class="btn btn-primary">再战沙场</button>
+    </section>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
